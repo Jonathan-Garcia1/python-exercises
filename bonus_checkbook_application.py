@@ -21,14 +21,16 @@ def debits():
     b = balance
     debit = int(input('How much is the debit? '))
     b -= debit
-
-    with open (trans_file, 'r') as tf:
-
-    curr_trans = json.load(f)
-    
+    new_dic_trans = {}
+    with open('python_dictionary.json','r+') as f:
+        dic = json.load(f)
+        dic.update(new_dictionary)
+        json.dumps()
 
     with open (trans_file, 'w') as tf:
-        json.dump(debit, tf)
+        dic_trans = json.load(tf)
+        dic_trans.update(new_dic_trans)
+        json.dumps()
     return b
 
 def credits():
@@ -52,7 +54,12 @@ if os.path.exists(cb_file):
 #otherwise, set balance to 0
 else:
     balance = 0
-
+#load the transactions dictionary from the transactions file
+if os.path.exists(trans_file):
+    with open (trans_file, 'r') as tf:
+        dic_trans = json.load(tf)
+else:
+    dic_trans = {}
 
 #print welcome message
 print(welcome)
