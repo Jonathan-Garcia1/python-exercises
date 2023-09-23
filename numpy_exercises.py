@@ -214,4 +214,3 @@ print(d)
 print(np.transpose(d))
 # Exercise 10 - Reshape d into an array of 9 x 2
 np.reshape(d,(9,2))
-

@@ -13,24 +13,27 @@ options = '''What would you like to do?
 5) exit'''
 
 #create task list
-task_list = [1,2,3,4]
+task_list = [1,2,3,4,5]
 trans = []
 
 #define functions to view balance
 def debits():
+    # create a new variable b, set it to the original balance
     b = balance
+    # use the input to set debit variable
     debit = int(input('How much is the debit? '))
+    # b(balance) will subtract debit from
     b -= debit
-    new_dic_trans = {}
-    with open('python_dictionary.json','r+') as f:
-        dic = json.load(f)
-        dic.update(new_dictionary)
-        json.dumps()
-
+    #set new dictionary transactions to the dictionary with the debited amount
+    new_dic_trans = {"type": "debit", "amount": debit}
+    # open the transactions file as tf
     with open (trans_file, 'w') as tf:
-        dic_trans = json.load(tf)
-        dic_trans.update(new_dic_trans)
-        json.dumps()
+        #set the file contents to dic_trans
+        #dic_trans = json.load(tf)
+        #update the original transactions dictionaries with the new transaction (append)
+        dic_trans.append(new_dic_trans)
+        json.dump(dic_trans, tf, indent=4)
+
     return b
 
 def credits():
@@ -54,6 +57,7 @@ if os.path.exists(cb_file):
 #otherwise, set balance to 0
 else:
     balance = 0
+
 #load the transactions dictionary from the transactions file
 if os.path.exists(trans_file):
     with open (trans_file, 'r') as tf:
@@ -84,7 +88,8 @@ while True:
             print(balance)
         elif curr_task == 4:
             print('Transactions history')
-            print(trans)
+            for transaction in dic_trans:
+                print(transaction["type"], "\t", transaction["amount"])
         elif curr_task == 5:
             print()
             if input('save changes? Y/N ') == 'Y':
@@ -102,5 +107,3 @@ while True:
     
 #with open (cb_file, 'w') as f:
 #    json.dump(balance, f)
-
-
